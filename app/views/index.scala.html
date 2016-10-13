@@ -1,0 +1,28 @@
+@*
+ * This template takes a single argument, a String containing a
+ * message to display.
+ *@
+@(message: String, webJarAssets: WebJarAssets)
+
+@*
+ * Call the `main` template with two arguments. The first
+ * argument is a `String` with the title of the page, the second
+ * argument is an `Html` object containing the body of the page.
+ *@
+@main("Welcome to Play", webJarAssets) {
+
+    @*
+     * Get an `Html` object by calling the built-in Play welcome
+     * template and passing a `String` message.
+     *@
+    @* play20.welcome(message, style = "Scala") *@
+  <div>
+    <p>Help make personal brochures great again!!</p>
+  </div>
+  <div id="content" ></div>
+
+  @*<script type='text/javascript' src='@routes.Assets.versioned("javascripts/Menu.js")'></script>*@
+  @*<script type='text/javascript' src='@routes.Assets.versioned("javascripts/reactTest.js")'></script>*@
+  <script type='text/javascript' src='@routes.Assets.versioned("javascripts/app.js")'></script>
+
+}
