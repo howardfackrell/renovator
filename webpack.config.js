@@ -3,7 +3,8 @@
 var webpack = require('webpack'),
     jsPath  = 'app/assets/javascripts',
     path = require('path'),
-    srcPath = path.join(__dirname, 'app/assets/javascripts');
+    srcPath = path.join(__dirname, 'app/assets/javascripts'),
+    promise = require('es6-promise').polyfill();
 
 var config = {
     debug: true,
@@ -30,12 +31,12 @@ var config = {
     module: {
         noParse: [],
         loaders: [
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
-                // loader: 'jsx-loader'
-            }
+            {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'},
+            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
+            {test: /\.css$/, loader: 'style!css' },
+            {test: /\.(woff|woff2)$/, loader: 'url?prefix=font/&limit=5000'},
+            {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
+            {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'}
         ]
     },
     plugins: [

@@ -1,0 +1,4 @@
+'use strict'
+
+export const UPDATE_PROGRAM_STP = 'UPDATE_PROGRAM_STP';
+export const UPDATE_CONVERSION_STP = 'UPDATE_CONVERSION_STP';

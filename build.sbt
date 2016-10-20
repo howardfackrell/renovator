@@ -18,7 +18,7 @@ libraryDependencies ++= Seq(
 
 )
 
-//playRunHooks <+= baseDirectory.map(Webpack.apply)
+playRunHooks <+= baseDirectory.map(Webpack.apply)
 
 
 

@@ -1,75 +1,18 @@
+'use strict'
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
 import { Router, Route, hashHistory } from 'react-router'
-import Menu from './Menu';
-import {TestComp as Thingy, Greeter } from './Greeter';
+import 'bootstrap/dist/css/bootstrap.css';
+import Menu from './components/Menu';
+import configureStore from './store/index'
+
+import ProgramSearch from './containers/ProgramSearchPage';
+import ConversionSearch from './containers/ConversionSearchPage';
 
 
 
-class ProgramLookupPanel extends React.Component{
-
-    constructor() {
-        super();
-        this.state =  {stp : "0000368258", programs : []};
-
-        this.handleStpChange = this.handleStpChange.bind(this);
-    }
-
-    doSomething(e) {
-        e.preventDefault();
-        console.log("I'm doing something")
-    }
-
-    handleStpChange(e) {
-        console.log("running the handler function.....");
-        var currentStp = e.target.value;
-        $.ajax({
-            url: "/clients/" + currentStp + "/programs",
-            dataType: 'json',
-            type: 'GET',
-            success: function(data) {
-                console.log("data from webservice is : " );
-                data.forEach(function(e) { console.log(e)});
-                this.setState({stp : currentStp, programs : data})
-                console.log("Everything is O K")
-            }.bind(this),
-            error: function(xhr, status, err) {
-                this.setState({stp : currentStp, programs : []});
-                console.error(this.props.url, status, err.toString())
-            }.bind(this)
-        });
-    }
-
-
-    render() {
-        return (
-            <div>
-                <Menu />
-                <div className="programLookup">
-                    <p>current stp is : {this.state.stp}</p>
-                    <p>current programs are : </p>
-                    {this.state.programs.map(function(program) {
-                        {console.log("trying to print " + program)}
-                        return <li key={program.id}>{program.name}</li>
-                    })}
-                    <form>
-                        <label htmlFor="stp">STP:</label>
-                        <input type="textbox" onBlur={this.handleStpChange} />
-                        <label htmlFor="programId">Program</label>
-                        <select type="select">
-                            {this.state.programs.map(function(program) {
-                                return <option key={program.programId} value={program.programId}>{program.programId + " " + program.name}</option>
-                            })}
-                        </select>
-
-                        <button  id="programLookupButton" onClick={this.doSomething}>Find</button>
-                    </form>
-                </div>
-            </div>
-        );
-    }
-}
 
 class ContinueConversionPanel extends React.Component {
     render() {
@@ -84,68 +27,6 @@ class ContinueConversionPanel extends React.Component {
     }
 }
 
-class ConversionFinder extends React.Component {
-
-    constructor(props) {
-        super();
-        this.state = { stp: '', programs : [], program : '' };
-        this.handleStpChange = this.handleStpChange.bind(this);
-        this.handleProgramChange = this.handleProgramChange.bind(this);
-    }
-
-    programIdList(conversions) {
-        var programs = [];
-        conversions.forEach( function(conversion) {
-            programs.push(conversion.programId);
-        });
-        return programs;
-    }
-
-    doSelection(event) {
-        console.log("Doing the selection....")
-
-    }
-
-    handleStpChange(e) {
-        console.log("running the handler function.....");
-        var currentStp = e.target.value;
-        $.ajax({
-            url: "/clients/" + currentStp + "/conversions",
-            dataType: 'json',
-            type: 'GET',
-            success: function(data) {
-                console.log("data from webservice is : " );
-                data.forEach(function(e) { console.log(e)});
-                this.setState({stp : currentStp, programs : this.programIdList(data)})
-                console.log("Everything is O K")
-            }.bind(this),
-            error: function(xhr, status, err) {
-                this.setState({stp : currentStp, programs : []});
-                console.error(this.props.url, status, err.toString())
-            }.bind(this)
-        });
-    }
-
-    handleProgramChange(e) {
-        console.log(e.target.value)
-    }
-
-    render() {
-        return <div>
-            <label htmlFor="stp">STP:</label>
-            <input type="textbox" onBlur={this.handleStpChange} />
-            <label htmlFor="programId">Program</label>
-            <select type="select" onChange={this.handleProgramChange}>
-                {this.state.programs.map(function(program) {
-                    return <option key={program} value={program}>{program}</option>
-                })}
-
-            </select>
-
-            <button  id="programLookupButton" onClick={this.doSelection}>Select</button>
-        </div>
-    }
-}
 
 class ConversionInfo extends React.Component {
     render() {
@@ -173,14 +54,17 @@ class ConversionStep extends React.Component {
     }
 }
 
+const store = configureStore();
 
 ReactDOM.render(
-    <Router history={hashHistory}>
+    <Provider store={store}>
+        <Router history={hashHistory}>
+            <Route path="/" component={Menu}/>
+            <Route path="/start" component={ProgramSearch}/>
+            <Route path="/continue" component={ConversionSearch}/>
 
-        <Route path="/" component={ProgramLookupPanel} />
-        <Route path="/start" component={ProgramLookupPanel} />
-        <Route path="/continue" component={ContinueConversionPanel} />
-    </Router>
+        </Router>
+    </Provider>
     ,
     document.getElementById('content')
 );
