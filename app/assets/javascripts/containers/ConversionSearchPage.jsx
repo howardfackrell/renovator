@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import * as actions from '../actions/actionCreators'
+import * as conversionActions from '../actions/conversionActions'
 
 
 import ConversionSearch from '../components/ConversionSearch'
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch) => {
 
         updateStp : (event) => {
             let stp = event.target.value;
-            dispatch(actions.updateConversionStp(stp))
+            dispatch(conversionActions.updateConversionStp(stp))
         },
 
         findConversions : () => {

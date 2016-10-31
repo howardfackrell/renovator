@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import * as actions from '../actions/actionCreators'
+import * as programActions from '../actions/programActions'
 
 
 import ProgramSearch from '../components/ProgramSearch'
@@ -10,7 +10,8 @@ import ProgramSearch from '../components/ProgramSearch'
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        programStp : state.programStp
+        programStp : state.programStp,
+        programs : state.programs
     }
 };
 
@@ -20,15 +21,12 @@ const mapDispatchToProps = (dispatch) => {
 
         updateStp : (event) => {
             let stp = event.target.value;
-            dispatch(actions.updateProgramStp(stp))
+            dispatch(programActions.updateProgramStp(stp));
+            dispatch(programActions.findPrograms(stp));
         },
 
-        findPrograms : () => {
-            alert ("Now its time to do a server call to get programs for STP : " + dispatch.getState().programStp);
-        },
-
-        startConversion : () => {
-            alert("start the conversion, and route to display that conversion")
+        startConversion : (event) => {
+            alert("start the conversion, and route to display that conversion for "+ stp + "/" + programId)
         }
 
     }
