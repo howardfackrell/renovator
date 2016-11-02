@@ -9,12 +9,14 @@ const ProgramRow = ( {program} ) => {
             <td>{program.programId} {program.name}</td>
             <td>
                 <table>
+                    <tbody>
                     {program.conversions.map( (conversion) => {
+                        let linkTo = "/conversion/" + conversion.id
                     return (
-                        <tr><td><a key={conversion.id} href="conversion">{conversion.programId} {conversion.name} </a></td></tr>
+                        <tr key={conversion.id}><td><Link to={linkTo} >{conversion.programId} {conversion.name} </Link></td></tr>
                     )})}
                 <tr><td><a href="#" >New Conversion</a></td></tr>
-                    </table>
+                    </tbody></table>
             </td>
         </tr>
     )
