@@ -1,37 +1,29 @@
 'use strict'
 
-import React from 'react'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import * as programActions from '../actions/programActions'
-
-
 import ProgramSearch from '../components/ProgramSearch'
 
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        programStp : state.programStp,
-        programs : state.programs
-    }
-};
+const mapStateToProps = (state) => {
+  return {
+    programStp: state.programStp,
+    programs: state.programs
+  }
+}
 
 
 const mapDispatchToProps = (dispatch) => {
-    return {
+  return {
 
-        updateStp : (event) => {
-            let stp = event.target.value;
-            dispatch(programActions.updateProgramStp(stp));
-            dispatch(programActions.findPrograms(stp));
-        },
-
-        startConversion : (event) => {
-            alert("start the conversion, and route to display that conversion for "+ stp + "/" + programId)
-        }
-
+    updateStp: (event) => {
+      const stp = event.target.value
+      dispatch(programActions.updateProgramStp(stp))
+      dispatch(programActions.findPrograms(stp))
     }
+  }
 
-};
+}
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProgramSearch)

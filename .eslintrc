@@ -1,0 +1,39 @@
+{
+  "rules": {
+    "indent": ["error", 2, {'SwitchCase': 1}],
+    "quotes": ["error", "single"],
+    "linebreak-style": ["error", "unix"],
+    "semi": ["error", "never"],
+    "prefer-const": ["error"],
+    "comma-dangle": ["error", "never"],
+    "no-shadow": ["error"],
+    "no-alert": ["error"],
+    "no-unused-vars": ["error", { "varsIgnorePattern": "styl" }],
+    "eqeqeq": ["error", "always"],
+    "no-var": ["error"],
+    "react/jsx-uses-vars": 1,
+    "react/jsx-uses-react": 1
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true,
+    "mocha": true
+  },
+  "extends": "eslint:recommended",
+  "ecmaFeatures": {
+    "jsx": true,
+    "experimentalObjectRestSpread": true,
+    "modules": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "plugins": [
+    "react"
+  ]
+}

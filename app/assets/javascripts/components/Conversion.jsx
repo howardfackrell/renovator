@@ -1,15 +1,15 @@
 'use strict'
 
-import React from 'react';
-import Menu from './Menu';
+import React from 'react'
+import Menu from './Menu'
 
-const CopyProgramStep = (props) => {
+const CopyProgramStep = () => {
   return (
     <input type="text" placeholder="Program Name"/>
   )
 }
 
-const CopyAssetsStep = (props) => {
+const CopyAssetsStep = () => {
   return (
     <div className="row">
 
@@ -17,13 +17,13 @@ const CopyAssetsStep = (props) => {
         <h6>Load Photo for</h6>
         <div className="radio">
           <label>
-            <input type="radio" name="photo" value="Client" />
+            <input type="radio" name="photo" value="Client"/>
             Client
           </label>
         </div>
         <div className="radio">
           <label>
-            <input type="radio" name="photo" value="Program" />
+            <input type="radio" name="photo" value="Program"/>
             Program only
           </label>
         </div>
@@ -33,13 +33,13 @@ const CopyAssetsStep = (props) => {
         <h6>Load Logo for</h6>
         <div className="radio">
           <label>
-            <input type="radio" name="logo" value="Client" />
+            <input type="radio" name="logo" value="Client"/>
             Client
           </label>
         </div>
         <div className="radio">
           <label>
-            <input type="radio" name="logo" value="Program" />
+            <input type="radio" name="logo" value="Program"/>
             Program only
           </label>
         </div>
@@ -49,36 +49,36 @@ const CopyAssetsStep = (props) => {
         <h6>Load Photo for</h6>
         <div className="radio">
           <label>
-            <input type="radio" name="sig" value="Client" />
+            <input type="radio" name="sig" value="Client"/>
             Client
           </label>
         </div>
         <div className="radio">
           <label>
-            <input type="radio" name="sig" value="Program" />
+            <input type="radio" name="sig" value="Program"/>
             Program only
           </label>
         </div>
       </div>
-      </div>
+    </div>
   )
 }
 
 const StepWrapper = (props) => {
-  let background;
+  let background
   switch (props.status) {
-    case "failed":
-      background = "panel-danger";
-      break;
-    case "success":
-      background = "panel-success";
-      break;
+    case 'failed':
+      background = 'panel-danger'
+      break
+    case 'success':
+      background = 'panel-success'
+      break
     default :
-      background = "panel-default";
-      break;
+      background = 'panel-default'
+      break
   }
   return (
-    <div className={"panel " + background }>
+    <div className={'panel ' + background }>
       <div className="panel-heading">
         <h4>{props.name}</h4>
         {(props.error) ?
@@ -101,7 +101,7 @@ const StepWrapper = (props) => {
   )
 }
 
-const Conversion = ({params: {conversionId}, location: {query}}) => {
+const Conversion = ({params: {conversionId}}) => {
   return (
     <div className="container-fluid">
       <Menu />
@@ -123,4 +123,4 @@ const Conversion = ({params: {conversionId}, location: {query}}) => {
   )
 }
 
-export default Conversion;
+export default Conversion

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 var webpack = require('webpack'),
     jsPath  = 'app/assets/javascripts',
@@ -27,9 +27,15 @@ var config = {
         filename: '[name].js',
         pathInfo: true
     },
+    eslint: {
+        configFile: path.join(__dirname, '.eslintrc')
+    },
 
     module: {
         noParse: [],
+        preLoaders: [
+            {test: /\.jsx?$/, exclude: /node_modules/, loader: 'eslint-loader'}
+        ],
         loaders: [
             {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'},
             {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
