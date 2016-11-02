@@ -104,8 +104,8 @@ const StepWrapper = (props) => {
 const Conversion = ({params: {conversionId}}) => {
   return (
     <div className="container-fluid">
-      <Menu />
       <div className="col-sm-offset-1 col-sm-10">
+        <Menu />
         <div className="row">
           <h2 className="col-sm-12">Conversion {conversionId}</h2>
         </div>
