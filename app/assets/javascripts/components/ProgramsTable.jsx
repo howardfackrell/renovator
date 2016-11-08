@@ -3,7 +3,7 @@
 import React from 'react'
 import {Link} from 'react-router'
 
-const ProgramRow = ({program}) => {
+const ProgramRow = ({program, startConversion}) => {
   return (
     <tr key={program.programId}>
       <td>{program.programId} {program.name}</td>
@@ -19,7 +19,7 @@ const ProgramRow = ({program}) => {
             )
           })}
           <tr>
-            <td><a href="#">New Conversion</a></td>
+            <td><a href="#" onClick={() => {startConversion(program.stp, program.programId)}}>New Conversion</a></td>
           </tr>
           </tbody>
         </table>
@@ -28,7 +28,7 @@ const ProgramRow = ({program}) => {
   )
 }
 
-const ProgramsTable = ({programs}) => {
+const ProgramsTable = ({programs, startConversion}) => {
 
   return (
     <table className="table table-bordered table-hover">
@@ -40,7 +40,7 @@ const ProgramsTable = ({programs}) => {
       </thead>
       <tbody>
       {programs.map(program => {
-        return <ProgramRow key={program.programId} program={program}/>
+        return <ProgramRow key={program.programId} program={program} startConversion={startConversion}/>
       })}
       </tbody>
     </table>

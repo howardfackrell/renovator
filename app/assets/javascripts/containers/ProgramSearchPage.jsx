@@ -20,6 +20,11 @@ const mapDispatchToProps = (dispatch) => {
       const stp = event.target.value
       dispatch(programActions.updateProgramStp(stp))
       dispatch(programActions.findPrograms(stp))
+    },
+
+    startConversion: (stp, programId) => {
+      console.log("stp " +stp + " programId " + programId)
+      dispatch(programActions.createNewConversion(stp, programId))
     }
   }
 

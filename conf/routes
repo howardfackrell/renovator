@@ -13,6 +13,8 @@ GET     /clients/:stp/programs     controllers.ProgramLookupController.findProgr
 GET     /clients/:stp/conversions     controllers.ConversionController.customerConversions(stp : String)
 GET     /clients/:stp/programs/:programId/conversion     controllers.ConversionController.customerProgramConversion(stp : String, programId : Int)
 
+POST    /conversion         controllers.ConversionController.createConversion()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 

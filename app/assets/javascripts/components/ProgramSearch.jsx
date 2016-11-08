@@ -4,7 +4,7 @@ import React, {PropTypes} from 'react'
 import Menu from './Menu'
 import ProgramsTable from './ProgramsTable'
 
-const ProgramSearch = (props) => {
+const ProgramSearch = ({programs, updateStp, startConversion}) => {
   return (
     <div className="container-fluid">
 
@@ -15,12 +15,12 @@ const ProgramSearch = (props) => {
             <div className="col-md-4 col-lg-2">
               <div className="form-group ">
                 <input type="textbox" className="form-control" placeholder="Sold To Party Number"
-                       onBlur={props.updateStp}/>
+                       onBlur={updateStp}/>
               </div>
             </div>
           </div>
           <div className="row">
-            <ProgramsTable programs={props.programs}/>
+            <ProgramsTable programs={programs} startConversion={startConversion} />
           </div>
         </div>
       </div>

@@ -3,7 +3,8 @@ package controllers
 import javax.inject.{Inject, Singleton}
 
 import play.api.libs.json.{JsArray, JsValue, Json}
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Action, Controller, Result}
+import services.ConversionDataService
 
 
 case class StepDefinition(val name : String, val seqId : Int)
@@ -16,7 +17,7 @@ case class Conversion (val stp : String, val originalProgramId : Int, val progra
   * Created by howard.fackrell on 10/6/16.
   */
 @Singleton
-class ConversionController @Inject() extends Controller {
+class ConversionController @Inject()(conversionDataService : ConversionDataService) extends Controller {
 
   val copyProgram = StepDefinition("Copy Program", 1)
   val pushImagesToDctm = StepDefinition("Documentum Image Setup", 2)
@@ -77,6 +78,21 @@ class ConversionController @Inject() extends Controller {
       case None => Ok("{}")
     }
 
+  }
+
+  def createConversion() = Action { request =>
+    val paramsOpt : Option[JsValue] = request.body.asJson
+
+    val resultOption : Option[Result] =for {
+      params : JsValue <- paramsOpt
+      stp : String <- (params \ "stp").asOpt[String]
+      programId : Int <- (params \ "programId").asOpt[Int]
+    } yield {
+
+      Ok(conversionDataService.createNewConversion(stp, programId).toString)
+    }
+
+    resultOption.getOrElse(BadRequest(s"Couldn't parse the request body ${request.body}" ))
   }
 
 

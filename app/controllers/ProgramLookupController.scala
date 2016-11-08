@@ -2,15 +2,13 @@ package controllers
 
 import javax.inject._
 
-import data.{Program, ConversionInfo}
+import data.{Program}
 import play.api.libs.json.Json
 import play.api.mvc._
 import services.ProgramService
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-
-import implicits.conversionInfoFormat
 import implicits.programFormat
 
 /**
