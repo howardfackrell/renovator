@@ -10,10 +10,9 @@ GET     /count                      controllers.CountController.count
 GET     /message                    controllers.AsyncController.message
 
 GET     /clients/:stp/programs     controllers.ProgramLookupController.findProgramForStp(stp : String)
-GET     /clients/:stp/conversions     controllers.ConversionController.customerConversions(stp : String)
-GET     /clients/:stp/programs/:programId/conversion     controllers.ConversionController.customerProgramConversion(stp : String, programId : Int)
 
 POST    /conversion         controllers.ConversionController.createConversion()
+GET     /conversion/:conversionId   controllers.ConversionController.conversion(conversionId : Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

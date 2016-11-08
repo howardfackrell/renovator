@@ -10,4 +10,7 @@ package object implicits {
   implicit val programFormat = Json.format[data.Program]
   implicit val wsProgramFormat = Json.format[data.WSProgram]
 
+  implicit val stepFormat = Json.format[data.Step]
+  implicit val conversionFormat = Json.format[data.Conversion]
+
 }

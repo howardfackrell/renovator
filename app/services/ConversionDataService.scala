@@ -1,40 +1,25 @@
 package services
 
-import java.sql.Connection
 import javax.inject.{Inject, Singleton}
 
 import anorm._
-import anorm.SqlParser.str
+import data.{Conversion, Step}
 import play.api.db.Database
 
 /**
   * Created by howard.fackrell on 11/2/16.
   */
-case class Conversion(val id : Long, val stp: String, val originalProgramId : Int, val programId : Int, val steps : List[ConversionStep])
 
-
-case class ConversionStep(val conversionId : Long, val seqId : Int, val status : String, val error : String)
-
-case class StepRow(val id : Long, val conversion_id : Long, val conversion_step_id : Long, val status : String, val error : Option[String])
 case class ConversionStepRow(val id : Long, val seq_id : Int, val name : String)
+case class ConversionRow(val id : Long, val stp : String, val original_program_id : Int, val program_id : Option[Int])
 
 @Singleton
 class ConversionDataService @Inject()(db : Database) {
 
-  val stepRowParser = Macro.namedParser[StepRow]
+  val stepParser = Macro.namedParser[Step]
   val conversionStepRowParser = Macro.namedParser[ConversionStepRow]
+  val conversionRowParser = Macro.namedParser[ConversionRow]
 
-  def read(): String = {
-
-    val count : String = db.withTransaction { implicit conn: Connection =>
-      val rs :List[StepRow] = SQL("select * from step ").as(stepRowParser.*)
-      rs.foldRight("") { (row, str) =>
-        str + "\n" + row.id + " " + row.conversion_id + " " + row.conversion_step_id + " " + row.status + row.error.getOrElse("")
-      }
-    }
-
-    s"$count"
-  }
 
   def createNewConversion(stp : String, originalProgramId : Int) : Long = {
 
@@ -59,6 +44,25 @@ class ConversionDataService @Inject()(db : Database) {
     }
 
     conversionId
+  }
+
+  def getConversion(id : Long) : Conversion = {
+    db.withTransaction{ implicit conn =>
+      val steps : List[Step] = SQL("select s.id, s.conversion_id, cs.seq_id, cs.name, s.status, s.error " +
+        "from step s " +
+        "join conversion_step cs on s.conversion_step_id = cs.id " +
+        "where conversion_id = {conversionId} " +
+        "order by  cs.seq_id ")
+        .on('conversionId -> id)
+        .as(stepParser.*)
+
+
+      val conv :ConversionRow = SQL("select id, stp, original_program_id, program_id from conversion where id = {id}")
+        .on('id -> id)
+        .as(conversionRowParser.single)
+
+      Conversion(conv.id, conv.stp, conv.original_program_id, conv.program_id, steps)
+    }
   }
 
 }
