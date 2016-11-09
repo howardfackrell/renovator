@@ -12,7 +12,7 @@ case class Program(val stp : String, val programId : Int, val name : String, con
 
 case class Client(val stp : String, val programs : List[Program] ) {}
 
-case class ConversionInfo(val id : Long, programId: Int, name : String) {}
+case class ConversionInfo(val id : Long, val programId: Int, val name : String)
 
 case class Conversion(val id : Long, val stp: String, val originalProgramId : Int, val programId : Option[Int], val steps : List[Step])
 case class Step(val id : Long, val conversion_id : Long, val seq_id : Int, val name : String, val status : String, val error : Option[String])

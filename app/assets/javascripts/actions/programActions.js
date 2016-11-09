@@ -38,7 +38,7 @@ export function createNewConversion(stp, programId) {
         dispatch(push('/conversion/' + conversionId))
       })
       .catch( error => {
-        console.log("something wicked happened trying to create a new conversion: " + error)
+        throw(error)
       })
   }
 }

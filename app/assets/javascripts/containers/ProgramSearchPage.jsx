@@ -23,7 +23,6 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     startConversion: (stp, programId) => {
-      console.log("stp " +stp + " programId " + programId)
       dispatch(programActions.createNewConversion(stp, programId))
     }
   }
