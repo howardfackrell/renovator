@@ -4,9 +4,10 @@ import { connect } from 'react-redux'
 
 import Conversion from '../components/Conversion'
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   return {
-    conversionId : 12345
+    conversionId : 12345,
+    conversion : state.conversion
   }
 }
 

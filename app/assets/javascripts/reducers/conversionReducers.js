@@ -11,3 +11,13 @@ export function conversionStp(state = '', action) {
       return state
   }
 }
+
+export function conversion(state = {}, action) {
+  switch (action.type) {
+    case actionType.LOAD_CONVERSION_SUCCESS:
+      return action.conversion
+
+    default:
+      return state
+  }
+}

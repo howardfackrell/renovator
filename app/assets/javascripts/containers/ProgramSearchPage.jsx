@@ -2,6 +2,7 @@
 
 import {connect} from 'react-redux'
 import * as programActions from '../actions/programActions'
+import * as conversionActions from '../actions/conversionActions'
 import ProgramSearch from '../components/ProgramSearch'
 
 
@@ -24,6 +25,10 @@ const mapDispatchToProps = (dispatch) => {
 
     startConversion: (stp, programId) => {
       dispatch(programActions.createNewConversion(stp, programId))
+    },
+
+    loadConversion: (conversionId) => {
+      dispatch(conversionActions.loadConversion(conversionId))
     }
   }
 

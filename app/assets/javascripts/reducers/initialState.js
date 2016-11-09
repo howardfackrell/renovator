@@ -2,5 +2,6 @@
 
 export default {
     programStp: "",
-    programs: []
+    programs: [],
+    conversion: {}
 };

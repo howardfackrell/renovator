@@ -101,13 +101,15 @@ const StepWrapper = (props) => {
   )
 }
 
-const Conversion = ({params: {conversionId}}) => {
+
+const Conversion = (props) => {
+  const { id, stp,  originalProgramId}= props.conversion
   return (
     <div className="container-fluid">
       <div className="col-sm-offset-1 col-sm-10">
         <Menu />
         <div className="row">
-          <h2 className="col-sm-12">Conversion {conversionId}</h2>
+          <h2 className="col-sm-12">[{id}] Conversion for {stp} / {originalProgramId}</h2>
         </div>
         <StepWrapper name="Some Step" status="failed" error="Something bad happened">
           <div>This is the inner Content</div>

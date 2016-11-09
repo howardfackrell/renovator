@@ -4,7 +4,7 @@ import React, {PropTypes} from 'react'
 import Menu from './Menu'
 import ProgramsTable from './ProgramsTable'
 
-const ProgramSearch = ({programs, updateStp, startConversion}) => {
+const ProgramSearch = ({programs, updateStp, startConversion, loadConversion}) => {
   return (
     <div className="container-fluid">
 
@@ -20,7 +20,7 @@ const ProgramSearch = ({programs, updateStp, startConversion}) => {
             </div>
           </div>
           <div className="row">
-            <ProgramsTable programs={programs} startConversion={startConversion} />
+            <ProgramsTable programs={programs} startConversion={startConversion} loadConversion={loadConversion} />
           </div>
         </div>
       </div>
@@ -32,7 +32,8 @@ ProgramSearch.propTypes = {
   programStp: PropTypes.string.isRequired,
   programs: PropTypes.array.isRequired,
   updateStp: PropTypes.func.isRequired,
-  startConversion: PropTypes.func.isRequired
+  startConversion: PropTypes.func.isRequired,
+  loadConversion: PropTypes.func.isRequired
 }
 
 

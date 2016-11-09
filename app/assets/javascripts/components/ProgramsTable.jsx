@@ -1,9 +1,8 @@
 'use strict'
 
 import React from 'react'
-import {Link} from 'react-router'
 
-const ProgramRow = ({program, startConversion}) => {
+const ProgramRow = ({program, startConversion, loadConversion}) => {
   return (
     <tr key={program.programId}>
       <td>{program.programId} {program.name}</td>
@@ -11,10 +10,9 @@ const ProgramRow = ({program, startConversion}) => {
         <table>
           <tbody>
           {program.conversions.map((conversion) => {
-            const linkTo = '/conversion/' + conversion.id
             return (
               <tr key={conversion.id}>
-                <td><Link to={linkTo}>{conversion.programId} {conversion.name} </Link></td>
+                <td><a href="#" onClick={() => {loadConversion(conversion.id)}}>{conversion.programId} {conversion.name} </a></td>
               </tr>
             )
           })}
@@ -28,7 +26,7 @@ const ProgramRow = ({program, startConversion}) => {
   )
 }
 
-const ProgramsTable = ({programs, startConversion}) => {
+const ProgramsTable = ({programs, startConversion, loadConversion}) => {
 
   return (
     <table className="table table-bordered table-hover">
@@ -40,7 +38,7 @@ const ProgramsTable = ({programs, startConversion}) => {
       </thead>
       <tbody>
       {programs.map(program => {
-        return <ProgramRow key={program.programId} program={program} startConversion={startConversion}/>
+        return <ProgramRow key={program.programId} program={program} startConversion={startConversion} loadConversion={loadConversion}/>
       })}
       </tbody>
     </table>

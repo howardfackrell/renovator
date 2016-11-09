@@ -12,3 +12,7 @@ export function createConversion(stp, programId) {
     programId
   })
 }
+
+export function loadConversion(id) {
+  return axios.get('/conversion/' + id)
+}
