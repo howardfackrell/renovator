@@ -17,7 +17,7 @@ class DataSpec extends FlatSpec with ShouldMatchers {
 
     val json: String = Json.toJson(conversion).toString()
     val expectation: String =
-      """{"id":1,"stp":"0000368258","originalProgramId":3,"programId":4,"steps":[{"id":1,"conversion_id":1,"seq_id":1,"name":"Copy Program","status":"COMPLETED"},{"id":1,"conversion_id":1,"seq_id":1,"name":"Convert CLUI","status":"NOT_STARTED"}]}"""
+      """{"id":1,"stp":"0000368258","originalProgramId":3,"programId":4,"steps":[{"id":1,"conversionId":1,"seqId":1,"name":"Copy Program","status":"COMPLETED"},{"id":1,"conversionId":1,"seqId":1,"name":"Convert CLUI","status":"NOT_STARTED"}]}"""
     println(json)
     println(expectation)
     json should be(expectation)

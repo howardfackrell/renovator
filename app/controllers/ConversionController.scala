@@ -35,5 +35,10 @@ class ConversionController @Inject()(conversionDataService : ConversionDataServi
     Ok(Json.toJson(conversionDataService.getConversion(conversionId)))
   }
 
+  def completed(conversionId : Long, stepId : Long) = Action {
+    conversionDataService.stepCompleted(stepId)
+    Ok(Json.toJson(conversionDataService.getConversion(conversionId)))
+  }
+
 
 }

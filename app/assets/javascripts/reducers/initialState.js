@@ -3,5 +3,8 @@
 export default {
     programStp: "",
     programs: [],
-    conversion: {}
+    conversion: {},
+    copyProgramParams: {
+        programName: ''
+    }
 };

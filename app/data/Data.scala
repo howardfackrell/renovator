@@ -15,7 +15,7 @@ case class Client(val stp : String, val programs : List[Program] ) {}
 case class ConversionInfo(val id : Long, val programId: Int, val name : String)
 
 case class Conversion(val id : Long, val stp: String, val originalProgramId : Int, val programId : Option[Int], val steps : List[Step])
-case class Step(val id : Long, val conversion_id : Long, val seq_id : Int, val name : String, val status : String, val error : Option[String])
+case class Step(val id : Long, val conversionId : Long, val seqId : Int, val name : String, val status : String, val error : Option[String])
 
 case class WSProgram(val customerName : String, programId : String, status : String, templateDescription : String, soldToPartyNumber : String, programName : String)
 

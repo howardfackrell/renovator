@@ -2,6 +2,7 @@
 
 import * as actionTypes from './actionTypes.js'
 import * as programApi from '../api/programApi'
+import * as conversionApi from '../api/conversionApi'
 import {push} from 'react-router-redux'
 
 export function updateConversionStp(stp) {
@@ -15,6 +16,35 @@ export function loadConversionSuccess(conversion) {
   return {
     'type': actionTypes.LOAD_CONVERSION_SUCCESS,
     conversion
+  }
+}
+
+export function stepCopyProgramUpdateName(name) {
+  return {
+    'type': actionTypes.STEP_COPY_PROGRAM_UPDATE_NAME,
+    name
+  }
+}
+
+export function stepCopyProgramExecute(conversionId, copyProgramParams) {
+  return function(dispatch) {
+    return conversionApi.stepCopyProgramExecute(conversionId, copyProgramParams).then(response => {
+      const conversion = response.data
+      dispatch(loadConversionSuccess(conversion))
+    }).catch(error => {
+      throw(error)
+    })
+  }
+}
+
+export function stepCompleted(conversionId, stepId) {
+  return function(dispatch) {
+    return conversionApi.stepCompleted(conversionId, stepId).then(response => {
+      const conversion = response.data
+      dispatch(loadConversionSuccess(conversion))
+    }).catch(error => {
+      throw(error)
+    })
   }
 }
 

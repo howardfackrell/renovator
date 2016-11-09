@@ -15,7 +15,19 @@ export function conversionStp(state = '', action) {
 export function conversion(state = {}, action) {
   switch (action.type) {
     case actionType.LOAD_CONVERSION_SUCCESS:
-      return action.conversion
+      return Object.assign({}, action.conversion)
+
+    default:
+      return state
+  }
+}
+
+export function copyProgramStep(state = {}, action) {
+  switch (action.type) {
+    case actionType.STEP_COPY_PROGRAM_UPDATE_NAME:
+      return Object.assign({}, state, {
+        name : action.name
+      })
 
     default:
       return state

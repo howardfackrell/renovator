@@ -65,13 +65,17 @@ const CopyAssetsStep = () => {
 }
 
 const StepWrapper = (props) => {
+  const { step, stepCompleted, children} = props
   let background
-  switch (props.status) {
-    case 'failed':
+  switch (step.status) {
+    case 'FAILED':
       background = 'panel-danger'
       break
-    case 'success':
+    case 'COMPLETED':
       background = 'panel-success'
+      break
+    case 'STARTED':
+      background = 'panel-info'
       break
     default :
       background = 'panel-default'
@@ -80,20 +84,21 @@ const StepWrapper = (props) => {
   return (
     <div className={'panel ' + background }>
       <div className="panel-heading">
-        <h4>{props.name}</h4>
-        {(props.error) ?
-          <p>{props.error}</p> :
+        <h4>{step.name}</h4>
+        <p>id:{step.id} conversionId:{step.conversionId} name:{step.name} status:{step.status}</p>
+        {(step.error) ?
+          <p>{step.error}</p> :
           <p></p>
         }
       </div>
       <div className="panel-body">
         {
-          props.children
+          children
         }
         <div className="row">
           <div className="col-sm-8">
             <button className="btn btn-primary">Make it so</button>
-            <button className="btn btn-sm">I did it myself</button>
+            <button className="btn btn-sm" onClick={() => {stepCompleted(step.conversionId, step.id)}}>I did it myself</button>
           </div>
         </div>
       </div>
@@ -103,6 +108,13 @@ const StepWrapper = (props) => {
 
 
 const Conversion = (props) => {
+
+  const stepLookup = {}
+  const steps = props.conversion.steps
+  for (let i = 0, len = steps.length; i < len; i++) {
+    stepLookup[steps[i].name] = steps[i]
+  }
+
   const { id, stp,  originalProgramId}= props.conversion
   return (
     <div className="container-fluid">
@@ -111,13 +123,14 @@ const Conversion = (props) => {
         <div className="row">
           <h2 className="col-sm-12">[{id}] Conversion for {stp} / {originalProgramId}</h2>
         </div>
-        <StepWrapper name="Some Step" status="failed" error="Something bad happened">
+        <StepWrapper step={stepLookup['Copy Program']}
+                     stepCompleted={props.stepCompleted}>
           <div>This is the inner Content</div>
         </StepWrapper>
-        <StepWrapper name="Copy Program" status="success">
+        <StepWrapper step={{status:'FAILED'}} stepCompleted={props.stepCompleted} >
           <CopyProgramStep/>
         </StepWrapper>
-        <StepWrapper name="Copy Assets to DCTM">
+        <StepWrapper step={{status:'STARTED'}} stepCompleted={props.stepCompleted}>
           <CopyAssetsStep/>
         </StepWrapper>
       </div>

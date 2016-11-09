@@ -48,7 +48,7 @@ class ConversionDataService @Inject()(db : Database) {
 
   def getConversion(id : Long) : Conversion = {
     db.withTransaction{ implicit conn =>
-      val steps : List[Step] = SQL("select s.id, s.conversion_id, cs.seq_id, cs.name, s.status, s.error " +
+      val steps : List[Step] = SQL("select s.id, s.conversion_id as conversionId, cs.seq_id as seqId, cs.name, s.status, s.error " +
         "from step s " +
         "join conversion_step cs on s.conversion_step_id = cs.id " +
         "where conversion_id = {conversionId} " +
@@ -76,6 +76,13 @@ class ConversionDataService @Inject()(db : Database) {
       val conversionsForProgram = map.getOrElse(row.original_program_id, List[ConversionInfo]())
       val conversionInfo = ConversionInfo(row.id, row.program_id.getOrElse(-1), "fix me")
       map updated(row.original_program_id, conversionInfo :: conversionsForProgram)
+    }
+  }
+
+  def stepCompleted(stepId : Long) : Unit = {
+    db.withTransaction{ implicit conn =>
+      SQL("update step set status = 'COMPLETED', error = '' where id={stepId}")
+        .on('stepId -> stepId).execute()
     }
   }
 
