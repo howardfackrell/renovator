@@ -6,7 +6,6 @@ import * as conversion from './conversionReducers'
 
 const rootReducer = combineReducers({
   programStp: program.programStp,
-  conversionStp: conversion.conversionStp,
   programs: program.programs,
   conversion: conversion.conversion,
   copyProgramParams: conversion.copyProgramParams

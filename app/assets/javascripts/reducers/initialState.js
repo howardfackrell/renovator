@@ -5,6 +5,6 @@ export default {
     programs: [],
     conversion: {},
     copyProgramParams: {
-        programName: ''
+        name: ''
     }
 };

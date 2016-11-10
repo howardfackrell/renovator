@@ -27,7 +27,6 @@ const mapDispatchToProps = (dispatch) => {
     updateProgramName : (name) => {
       dispatch(conversionActions.stepCopyProgramUpdateName(name))
     }
-
   }
 }
 
