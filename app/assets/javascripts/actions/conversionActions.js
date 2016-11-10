@@ -26,8 +26,9 @@ export function stepCopyProgramUpdateName(name) {
   }
 }
 
-export function stepCopyProgramExecute(conversionId, copyProgramParams) {
-  return function(dispatch) {
+export function stepCopyProgramExecute(conversionId) {
+  return function(dispatch, getState) {
+    const { copyProgramParams } = getState()
     return conversionApi.stepCopyProgramExecute(conversionId, copyProgramParams).then(response => {
       const conversion = response.data
       dispatch(loadConversionSuccess(conversion))

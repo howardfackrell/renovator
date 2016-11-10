@@ -3,7 +3,7 @@
 import axios from 'axios'
 
 export function stepCopyProgramExecute(conversionId, programCopyParams) {
-  return axios.post('/conversion/' + conversionId + '/copyProgram', programCopyParams)
+  return axios.post(`/conversion/${conversionId}/copyProgram`, programCopyParams)
 }
 
 export function stepCompleted(conversionId, stepId) {

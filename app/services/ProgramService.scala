@@ -23,8 +23,8 @@ class ProgramService @Inject() (ws: WSClient, conversionDataService : Conversion
 
   def lookupProgramsForStp(stp : String) : Future[List[Program]] = {
 
-//    val request = ws.url(s"http://ilinkdev.octanner.com/skynet/rest/customer/$stp/programs")
-    val request = ws.url(s"http://localhost:8080/skynet/rest/customer/$stp/programs")
+    val request = ws.url(s"http://ilinkdev.octanner.com/skynet/rest/customer/$stp/programs")
+//    val request = ws.url(s"http://localhost:8080/skynet/rest/customer/$stp/programs")
 
     val futureResponse = request.withRequestTimeout(10000.millis).get()
 

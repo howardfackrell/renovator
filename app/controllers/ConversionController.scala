@@ -2,6 +2,8 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
+import data.StepStatus.{COMPLETED, STARTED}
+import data.StepTemplate.COPY_PROGRAM
 import play.api.libs.json.{JsArray, JsValue, Json}
 import play.api.mvc.{Action, Controller, Result}
 import services.ConversionDataService
@@ -24,7 +26,6 @@ class ConversionController @Inject()(conversionDataService : ConversionDataServi
       stp : String <- (params \ "stp").asOpt[String]
       programId : Int <- (params \ "programId").asOpt[Int]
     } yield {
-
       Ok(conversionDataService.createNewConversion(stp, programId).toString)
     }
 
@@ -36,8 +37,26 @@ class ConversionController @Inject()(conversionDataService : ConversionDataServi
   }
 
   def completed(conversionId : Long, stepId : Long) = Action {
-    conversionDataService.stepCompleted(stepId)
+    conversionDataService.updateStepStatus(stepId, COMPLETED, "")
+    println(s"marking step complete for conversionId $conversionId, stepId $stepId")
     Ok(Json.toJson(conversionDataService.getConversion(conversionId)))
+  }
+
+  def copyProgram(conversionId : Long) = Action { request =>
+    println(request.body.asJson)
+    val parameters = request.body.asJson
+    val resultOption = for {
+      parameters <- request.body.asJson
+      name <- (parameters \ "name").asOpt[String]
+    } yield {
+      val programCopyStep = conversionDataService.findStep(conversionId, COPY_PROGRAM)
+      println(s"starting Program copy for conversionId $conversionId, program name is $name")
+      conversionDataService.updateStepStatus(programCopyStep.id, STARTED, "")
+
+      Ok(Json.toJson(conversionDataService.getConversion(conversionId)))
+    }
+
+    resultOption.getOrElse(BadRequest(s"Unable to parse expected parameters from ${request.body}"))
   }
 
 

@@ -34,3 +34,18 @@ object TestData {
   )
 }
 
+object StepStatus {
+  sealed abstract class StepStatus(val value : String)
+  case object NOT_STARTED extends StepStatus("NOT_STARTED")
+  case object STARTED extends StepStatus("STARTED")
+  case object FAILED extends StepStatus("FAILED")
+  case object COMPLETED extends StepStatus("COMPLETED")
+}
+
+object StepTemplate {
+  sealed abstract class StepTemplate(val value : String)
+  case object COPY_PROGRAM extends StepTemplate("Copy Program")
+  case object COPY_ASSETS_TO_DOCUMENTUM extends StepTemplate("Copy Assets to Documentum")
+  case object COPY_CLUI extends StepTemplate("Copy Clui Admins")
+  case object CREATE_DEFAULT_BLOCKS extends StepTemplate("Create Default Blocks")
+}

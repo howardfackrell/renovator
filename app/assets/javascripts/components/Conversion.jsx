@@ -1,71 +1,10 @@
 'use strict'
 
-import React from 'react'
+import React, {PropTypes} from 'react'
 import Menu from './Menu'
 
-const CopyProgramStep = () => {
-  return (
-    <input type="text" placeholder="Program Name"/>
-  )
-}
-
-const CopyAssetsStep = () => {
-  return (
-    <div className="row">
-
-      <div className="col-sm-3">
-        <h6>Load Photo for</h6>
-        <div className="radio">
-          <label>
-            <input type="radio" name="photo" value="Client"/>
-            Client
-          </label>
-        </div>
-        <div className="radio">
-          <label>
-            <input type="radio" name="photo" value="Program"/>
-            Program only
-          </label>
-        </div>
-      </div>
-
-      <div className="col-sm-3">
-        <h6>Load Logo for</h6>
-        <div className="radio">
-          <label>
-            <input type="radio" name="logo" value="Client"/>
-            Client
-          </label>
-        </div>
-        <div className="radio">
-          <label>
-            <input type="radio" name="logo" value="Program"/>
-            Program only
-          </label>
-        </div>
-      </div>
-
-      <div className="col-sm-3">
-        <h6>Load Photo for</h6>
-        <div className="radio">
-          <label>
-            <input type="radio" name="sig" value="Client"/>
-            Client
-          </label>
-        </div>
-        <div className="radio">
-          <label>
-            <input type="radio" name="sig" value="Program"/>
-            Program only
-          </label>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 const StepWrapper = (props) => {
-  const { step, stepCompleted, children} = props
+  const { step, stepCompleted, executeStep, children} = props
   let background
   switch (step.status) {
     case 'FAILED':
@@ -95,15 +34,31 @@ const StepWrapper = (props) => {
         {
           children
         }
-        <div className="row">
-          <div className="col-sm-8">
-            <button className="btn btn-primary">Make it so</button>
-            <button className="btn btn-sm" onClick={() => {stepCompleted(step.conversionId, step.id)}}>I did it myself</button>
-          </div>
-        </div>
+      </div>
+      <div className="panel-footer">
+        <button className="btn btn-primary" onClick={() => {executeStep(step.conversionId)}}>Make it so</button>
+        <button className="btn btn-sm" onClick={() => {stepCompleted(step.conversionId, step.id)}}>I did it myself</button>
       </div>
     </div>
   )
+}
+
+
+const CopyProgramStep = (props) => {
+  return (
+    <StepWrapper step={ props.step }
+                 stepCompleted={props.stepCompleted}
+                 executeStep={props.executeStep}>
+      <input type="text" placeholder="Program Name" onChange={(event) => { props.updateProgramName(event.target.value)} }/>
+    </StepWrapper>
+  )
+}
+
+CopyProgramStep.propTypes = {
+  step: PropTypes.object.isRequired,
+  stepCompleted: PropTypes.func.isRequired,
+  executeStep: PropTypes.func.isRequired,
+  updateProgramName: PropTypes.func.isRequired
 }
 
 
@@ -123,19 +78,28 @@ const Conversion = (props) => {
         <div className="row">
           <h2 className="col-sm-12">[{id}] Conversion for {stp} / {originalProgramId}</h2>
         </div>
-        <StepWrapper step={stepLookup['Copy Program']}
-                     stepCompleted={props.stepCompleted}>
+        <CopyProgramStep step={stepLookup['Copy Program']}
+                     stepCompleted={props.stepCompleted}
+                     executeStep={props.startProgramCopy}
+                         updateProgramName={props.updateProgramName}>
           <div>This is the inner Content</div>
-        </StepWrapper>
-        <StepWrapper step={{status:'FAILED'}} stepCompleted={props.stepCompleted} >
-          <CopyProgramStep/>
-        </StepWrapper>
-        <StepWrapper step={{status:'STARTED'}} stepCompleted={props.stepCompleted}>
-          <CopyAssetsStep/>
-        </StepWrapper>
+        </CopyProgramStep>
+        {/*<StepWrapper step={{status:'FAILED'}} stepCompleted={props.stepCompleted} >*/}
+          {/*<CopyProgramStep/>*/}
+        {/*</StepWrapper>*/}
+        {/*<StepWrapper step={{status:'STARTED'}} stepCompleted={props.stepCompleted}>*/}
+          {/*<CopyAssetsStep/>*/}
+        {/*</StepWrapper>*/}
       </div>
     </div>
   )
+}
+
+Conversion.propTypes = {
+  conversion: PropTypes.object.isRequired,
+  stepCompleted: PropTypes.func.isRequired,
+  startProgramCopy: PropTypes.func.isRequired,
+  updateProgramName: PropTypes.func.isRequired
 }
 
 export default Conversion

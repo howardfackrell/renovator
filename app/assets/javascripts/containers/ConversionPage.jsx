@@ -18,7 +18,16 @@ const mapDispatchToProps = (dispatch) => {
   return {
     stepCompleted : (conversionId, stepId) => {
       dispatch(conversionActions.stepCompleted(conversionId, stepId))
+    },
+
+    startProgramCopy : (conversionId) => {
+      dispatch(conversionActions.stepCopyProgramExecute(conversionId))
+    },
+
+    updateProgramName : (name) => {
+      dispatch(conversionActions.stepCopyProgramUpdateName(name))
     }
+
   }
 }
 

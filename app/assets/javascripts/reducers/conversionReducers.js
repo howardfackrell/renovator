@@ -22,7 +22,7 @@ export function conversion(state = {}, action) {
   }
 }
 
-export function copyProgramStep(state = {}, action) {
+export function copyProgramParams(state = {}, action) {
   switch (action.type) {
     case actionType.STEP_COPY_PROGRAM_UPDATE_NAME:
       return Object.assign({}, state, {

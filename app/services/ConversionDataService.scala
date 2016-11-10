@@ -3,6 +3,8 @@ package services
 import javax.inject.{Inject, Singleton}
 
 import anorm._
+import data.StepStatus.StepStatus
+import data.StepTemplate.StepTemplate
 import data.{Conversion, ConversionInfo, Step}
 import play.api.db.Database
 
@@ -79,10 +81,23 @@ class ConversionDataService @Inject()(db : Database) {
     }
   }
 
-  def stepCompleted(stepId : Long) : Unit = {
+  def updateStepStatus(stepId : Long, status : StepStatus, error : String = "") : Unit = {
     db.withTransaction{ implicit conn =>
-      SQL("update step set status = 'COMPLETED', error = '' where id={stepId}")
-        .on('stepId -> stepId).execute()
+      SQL("update step set status = {status}, error = {error} where id={stepId}")
+        .on('stepId -> stepId, 'status -> status.value, 'error -> error)
+        .execute()
+    }
+  }
+
+  def findStep(conversionId : Long, step :StepTemplate) : Step = {
+    db.withConnection{ implicit conn =>
+      SQL("select s.id, s.conversion_id as conversionId, cs.seq_id as seqId, cs.name, s.status, s.error " +
+        "from conversion_step cs " +
+        "join step s on cs.id = s.conversion_step_id " +
+        "where s.conversion_id = {conversionId} " +
+        "and  cs.name = {name} "
+      ).on('conversionId -> conversionId, 'name -> step.value)
+        .as(stepParser.single)
     }
   }
 
