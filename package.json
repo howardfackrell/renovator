@@ -1,5 +1,18 @@
 {
-  "devDependencies": {},
+  "name": "renovator",
+  "version": "1.0.0",
+  "description": "App to start and track Personal Brochure conversions",
+  "scripts": {
+    "test": "mocha --reporter spec tools/testSetup.js \"app/assets/javascripts/**/*.test.js\""
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "enzyme": "^2.6.0",
+    "expect": "^1.20.2",
+    "jsdom": "^9.8.3",
+    "mocha": "^3.1.2",
+    "react-addons-test-utils": "^15.3.2"
+  },
   "dependencies": {
     "axios": "^0.15.2",
     "babel-core": "^6.17.0",
