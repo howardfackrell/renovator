@@ -1,19 +1,24 @@
 import play.sbt.PlayImport.PlayKeys.playRunHooks
 
+import scala.util.Properties
+
 name := """renovator"""
 
 version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala, SbtWeb)
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.11.7"
 
-credentials += Credentials(Path.userHome / ".m2" / ".credentials")
+val artifactoryUser: String = Properties.envOrElse("OCT_ARTIFACTORY_USER", "BADUSER")
 
-resolvers ++= Seq(
-  "OC Tanner Releases" at "https://artifactory.octanner.net/releases",
-  "OC Tanner Snapshots" at "https://artifactory.octanner.net/snapshots"
-)
+val artifactoryPassword: String = Properties.envOrElse("OCT_ARTIFACTORY_PASS", "BADPASSWORD")
+
+credentials += Credentials("Artifactory Realm", "artifactory.octanner.net", artifactoryUser, artifactoryPassword)
+
+resolvers += Resolver.url("OC Tanner Releases", url("https://artifactory.octanner.net/releases"))
+
+resolvers += Resolver.url("OC Tanner Snapshots", url("https://artifactory.octanner.net/snapshots"))
 
 libraryDependencies ++= Seq(
   jdbc,
