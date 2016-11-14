@@ -22,7 +22,7 @@ var config = {
         modulesDirectories: ['node_modules', jsPath]
     },
     output: {
-        path:path.resolve(__dirname, 'target/web/public/main/javascripts'),
+        path:path.resolve(__dirname, 'app/assets/javascripts'),
         publicPath: '',
         filename: '[name].js',
         pathInfo: true
