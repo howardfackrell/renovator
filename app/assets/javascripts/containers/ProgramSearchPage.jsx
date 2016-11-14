@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     startConversion: (stp, programId) => {
-      dispatch(programActions.createNewConversion(stp, programId))
+      dispatch(conversionActions.createNewConversion(stp, programId))
     },
 
     loadConversion: (conversionId) => {

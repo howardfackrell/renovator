@@ -60,3 +60,16 @@ export function loadConversion(id) {
     })
   }
 }
+
+export function createNewConversion(stp, programId) {
+  return function (dispatch) {
+    programApi.createConversion(stp, programId)
+      .then(response => {
+        const conversionId = response.data
+        dispatch(loadConversion(conversionId))
+      })
+      .catch( error => {
+        throw(error)
+      })
+  }
+}

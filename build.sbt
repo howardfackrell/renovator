@@ -19,6 +19,7 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
+  evolutions,
   "com.typesafe.play" %% "anorm" % "2.5.0",
   "org.postgresql" % "postgresql" % "9.4.1211",
   "org.webjars" %% "webjars-play" % "2.5.0",
